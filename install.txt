@@ -1,0 +1,11 @@
+python --version
+
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+
+python --version
+
+pip install SpeechRecognition
+
+sudo apt-get install python-pyaudio python3-pyaudio
+
+sudo apt-get install flac
