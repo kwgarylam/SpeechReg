@@ -4,21 +4,25 @@ from GUI import Ui_MainWindow
 import sys
 import threading
 import time
+from collections import deque
+import speech
 
-counter = 0
+# Create a list of 3 empty strings
+words = deque(["", "", ""])
+dataStream = ""
+
 
 def myjob():
     while True:
-        global counter
-        counter += 1
-        print(counter)
-        time.sleep(1)
+        global dataStream
+        dataStream = speech.main()
+        print(dataStream)
 
 class MainWindow(QtWidgets.QMainWindow):
 
-    def __init__(self):
+    global dataStream
 
-        global counter
+    def __init__(self):
 
         super(MainWindow, self).__init__()
         self.timer_i = 0
@@ -29,7 +33,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Timer
         self.qTimer = QTimer()
-        self.qTimer.setInterval(1000)  # set interval to 1 s; 1000 ms = 1 s
+        self.qTimer.setInterval(2000)  # set interval to 1 s; 1000 ms = 1 s
         self.qTimer.timeout.connect(self.updateMessages) # connect timeout signal to signal handler
         self.qTimer.start() # start timer
 
@@ -38,7 +42,40 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.pushButton_2.clicked.connect(self.NextButtonClicked)
 
     def updateMessages(self):
-        self.ui.label.setText('%d. Value in the thread' % counter)
+        global words
+        global dataStream
+
+        line1 = ""
+        line2 = ""
+        line3 = ""
+
+        print("T: ", dataStream)
+
+        if dataStream is not None:
+
+            if len(dataStream) > 0 and len(dataStream) <= 8:
+                words.rotate(-1)
+                words[2] = dataStream
+
+            elif len(dataStream) > 8 and len(dataStream) <= 16 :
+                words.rotate(-2)
+                words[1] = dataStream[:8]
+                words[2] = dataStream[8:]
+            elif len(dataStream) > 16:
+                words.rotate(-3)
+                words[0] = dataStream[:8]
+                words[1] = dataStream[8:16]
+                words[2] = dataStream[16:24]
+
+            dataStream = ""
+
+            line1 = words[0]
+            line2 = words[1]
+            line3 = words[2]
+
+            self.ui.label.setText(f'{line1} \n'
+                                  f'{line2} \n'
+                                  f'{line3}')
 
     def PreButtonClicked(self):
         if self.counter == 1:
