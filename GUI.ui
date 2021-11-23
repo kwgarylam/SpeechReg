@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>805</width>
-    <height>600</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -25,7 +17,7 @@
      <rect>
       <x>9</x>
       <y>490</y>
-      <width>781</width>
+      <width>1021</width>
       <height>81</height>
      </rect>
     </property>
@@ -42,8 +34,8 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>20</y>
-       <width>781</width>
+       <y>0</y>
+       <width>1011</width>
        <height>61</height>
       </rect>
      </property>
@@ -76,7 +68,7 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>781</width>
+      <width>1011</width>
       <height>491</height>
      </rect>
     </property>
@@ -104,7 +96,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>761</width>
+           <width>991</width>
            <height>151</height>
           </rect>
          </property>
@@ -155,7 +147,7 @@
           <rect>
            <x>0</x>
            <y>160</y>
-           <width>761</width>
+           <width>991</width>
            <height>151</height>
           </rect>
          </property>
@@ -179,7 +171,7 @@
           <rect>
            <x>0</x>
            <y>320</y>
-           <width>761</width>
+           <width>991</width>
            <height>151</height>
           </rect>
          </property>
