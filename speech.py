@@ -8,14 +8,20 @@ import time
 
 r = sr.Recognizer()
 
+myrecording = False
+
 def readAudioMic():
     # From microphone
+    global myrecording
+
     with sr.Microphone() as source:
         print('Recording... ')
+        myrecording = True
         #r.pause_threshold = 0.7
-        #r.energy_threshold = 500
+        #r.energy_threshold = 50
         r.dynamic_energy_threshold = False
         audio = r.listen(source, timeout=3, phrase_time_limit=5)
+
 
     return audio
 
@@ -26,23 +32,35 @@ def readAudioFile():
 
     return audio
 
-while True:
-
+def main():
     try:
         print('------')
         audio = readAudioMic()
+        global myrecording
 
         try:
-            print("Result: \n" + r.recognize_google(audio, language='yue'))
+            result = r.recognize_google(audio, language='yue')
+            myrecording = False
+            print("Return results: ", result)
+            return result
         except sr.UnknownValueError:
+            myrecording = False
             print('Unknown Error')
         except LookupError:
+            myrecording = False
             print('Could not understand audio')
         except sr.RequestError:
+            myrecording = False
             print('Request Error')
 
     except:
         print('Retry\n------')
-        time.sleep(0.5)
+        myrecording = False
+        #time.sleep(0.1)
 
-print('Program terminated ...')
+if __name__ == '__main__':
+
+    while True:
+        main()
+
+    print('Program terminated ...')
