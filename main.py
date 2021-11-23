@@ -15,11 +15,11 @@ dataStream = ""
 def myjob():
     while True:
         global dataStream
+
         dataStream = speech.main()
-        print(dataStream)
+
 
 class MainWindow(QtWidgets.QMainWindow):
-
     global dataStream
 
     def __init__(self):
@@ -33,9 +33,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Timer
         self.qTimer = QTimer()
-        self.qTimer.setInterval(2000)  # set interval to 1 s; 1000 ms = 1 s
-        self.qTimer.timeout.connect(self.updateMessages) # connect timeout signal to signal handler
-        self.qTimer.start() # start timer
+        self.qTimer.setInterval(100)  # set interval to 1 s; 1000 ms = 1 s
+        self.qTimer.timeout.connect(self.updateMessages)  # connect timeout signal to signal handler
+        self.qTimer.start()  # start timer
 
         # Button
         self.ui.pushButton.clicked.connect(self.PreButtonClicked)
@@ -45,37 +45,46 @@ class MainWindow(QtWidgets.QMainWindow):
         global words
         global dataStream
 
-        line1 = ""
-        line2 = ""
-        line3 = ""
+        if speech.myrecording:
+            self.ui.label_5.setStyleSheet("background-color: red; color:white")
+        else:
+            self.ui.label_5.setStyleSheet("background-color: black; color:white")
 
-        print("T: ", dataStream)
+        # print("Data is: ", dataStream)
 
         if dataStream is not None:
 
             if len(dataStream) > 0 and len(dataStream) <= 8:
                 words.rotate(-1)
                 words[2] = dataStream
+                self.ui.label.setStyleSheet("color:white")
+                self.ui.label_6.setStyleSheet("color:white")
+                self.ui.label_7.setStyleSheet("color:Yellow")
 
-            elif len(dataStream) > 8 and len(dataStream) <= 16 :
+
+
+            elif len(dataStream) > 8 and len(dataStream) <= 16:
                 words.rotate(-2)
                 words[1] = dataStream[:8]
                 words[2] = dataStream[8:]
+                self.ui.label.setStyleSheet("color:white")
+                self.ui.label_6.setStyleSheet("color:Yellow")
+                self.ui.label_7.setStyleSheet("color:Yellow")
+
+
             elif len(dataStream) > 16:
                 words.rotate(-3)
                 words[0] = dataStream[:8]
                 words[1] = dataStream[8:16]
                 words[2] = dataStream[16:24]
+                self.ui.label.setStyleSheet("color:Yellow")
+                self.ui.label_6.setStyleSheet("color:Yellow")
+                self.ui.label_7.setStyleSheet("color:Yellow")
 
+            self.ui.label.setText(f'{words[0]}')
+            self.ui.label_6.setText(f'{words[1]}')
+            self.ui.label_7.setText(f'{words[2]}')
             dataStream = ""
-
-            line1 = words[0]
-            line2 = words[1]
-            line3 = words[2]
-
-            self.ui.label.setText(f'{line1} \n'
-                                  f'{line2} \n'
-                                  f'{line3}')
 
     def PreButtonClicked(self):
         if self.counter == 1:
