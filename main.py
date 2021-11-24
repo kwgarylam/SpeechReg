@@ -29,6 +29,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.counter = 0
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        #self.setFixedWidth(1024)
+        #self.setFixedHeight(600)
         self.ui.label.setText('Hello World!')
 
         # Timer
@@ -110,6 +112,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
+
     app = QtWidgets.QApplication([])
     window = MainWindow()
     window.show()
@@ -117,7 +120,6 @@ if __name__ == '__main__':
     # Thread
     t = threading.Thread(target=myjob)
     t.start()
-
     sys.exit(app.exec_())
     print("Program terminated ...")
     exit()
