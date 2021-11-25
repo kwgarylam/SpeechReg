@@ -10,14 +10,14 @@ import speech
 # Create a list of 3 empty strings
 words = deque(["", "", ""])
 dataStream = ""
-
+run_thread = True
 
 def myjob():
-    while True:
+    global run_thread
+    while run_thread:
         global dataStream
-
         dataStream = speech.main()
-
+    print("Thread terminated ...")
 
 class MainWindow(QtWidgets.QMainWindow):
     global dataStream
@@ -113,13 +113,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
 if __name__ == '__main__':
 
-    app = QtWidgets.QApplication([])
-    window = MainWindow()
-    window.show()
+    try:
+        app = QtWidgets.QApplication([])
+        window = MainWindow()
+        window.show()
 
-    # Thread
-    t = threading.Thread(target=myjob)
-    t.start()
-    sys.exit(app.exec_())
-    print("Program terminated ...")
-    exit()
+        # Thread
+        t = threading.Thread(target=myjob)
+        t.start()
+        sys.exit(app.exec_())
+    except:
+        run_thread = False
+        t.join()
+        print("Program terminated ...")
+        exit()
