@@ -128,7 +128,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -140,6 +140,9 @@ class Ui_MainWindow(object):
         self.label_5.setText(_translate("MainWindow", "Recording"))
         self.label_6.setText(_translate("MainWindow", "Line2"))
         self.label_7.setText(_translate("MainWindow", "Line3"))
-        self.label_2.setText(_translate("MainWindow", "Page1"))
+        self.label_2.setText(_translate("MainWindow", "婆婆早晨 \n"
+"你食左早餐未阿\n"
+"天氣凍阿 \n"
+"記得著多件衫"))
         self.label_3.setText(_translate("MainWindow", "Page2"))
         self.label_4.setText(_translate("MainWindow", "Page3"))
